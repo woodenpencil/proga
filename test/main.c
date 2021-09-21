@@ -168,12 +168,11 @@ BOOL loadFromFile(const char* filename, PDNS_ENTRY* pDnsArray, unsigned int* siz
 
     if (*pDnsArray)
         return FALSE;
-
-    fInput = fopen(filename, "r");
+    fInput = fopen("C:/Users/Win10/source/repos/lab_1_dns_src/test/hosts", "r");
     if ( NULL == fInput )
         return FALSE;
 
-    dnCount = getNumOfLines(fInput);
+     dnCount = getNumOfLines(fInput);
     
     if ( (0 == dnCount) || !(*pDnsArray = (PDNS_ENTRY) calloc( dnCount, sizeof(DNS_ENTRY) ) ) )        
     {
