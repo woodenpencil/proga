@@ -168,7 +168,7 @@ BOOL loadFromFile(const char* filename, PDNS_ENTRY* pDnsArray, unsigned int* siz
 
     if (*pDnsArray)
         return FALSE;
-    fInput = fopen("C:/Users/Win10/source/repos/lab_1_dns_src/test/hosts", "r");
+    fInput = fopen("hosts", "r");
     if ( NULL == fInput )
         return FALSE;
 

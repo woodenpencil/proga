@@ -115,7 +115,6 @@ static void free_linkedlist(LinkedList* list) {
         temp = list;
         list = list->next;
         free(temp->item->key);
-        free(temp->item->value);
         free(temp->item);
         free(temp);
     }
@@ -165,8 +164,7 @@ HashTable* create_table(int size) {
 void free_item(Ht_item* item) {
     // Frees an item
     free(item->key);
-    free(item->value);
-    free(item);
+    free(item); 
 }
 
 void free_table(HashTable* table) {
@@ -274,7 +272,7 @@ void LoadHostsFile( DNSHandle hDNS, const char* hostsFilePath )
     unsigned int dnCount = 0;
     unsigned int i = 0;
 
-    fInput = fopen("C:/Users/Win10/source/repos/lab_1_dns_src/test/hosts", "r");
+    fInput = fopen("hosts", "r");
     if (NULL == fInput)
         return;
 
