@@ -111,6 +111,7 @@ DNS_TEST_RESULT TestDNS( DNSHandle DNEngine, DNS_ENTRY* testArray, unsigned int 
     DNS_TEST_RESULT result  = { 0, 0, 0, -1 };
 
     unsigned int i = 0;
+
     for ( i = 0; i < arraySize; i++ )
     {
         IPADDRESS ipResponse;
@@ -133,7 +134,7 @@ DNS_TEST_RESULT TestDNS( DNSHandle DNEngine, DNS_ENTRY* testArray, unsigned int 
                 result.firstWrong = i;
         }
     }
-
+    
     return result;
 }
 
@@ -168,7 +169,7 @@ BOOL loadFromFile(const char* filename, PDNS_ENTRY* pDnsArray, unsigned int* siz
 
     if (*pDnsArray)
         return FALSE;
-    fInput = fopen("hosts", "r");
+    fInput = fopen("../hosts", "r");
     if ( NULL == fInput )
         return FALSE;
 

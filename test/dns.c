@@ -77,7 +77,7 @@ static LinkedList* linkedlist_insert(LinkedList* list, Ht_item* item) {
 
     LinkedList* temp = list;
     LinkedList* temp_next = temp->next;
-    while (temp_next->next) {
+    while (temp->next!=NULL) {
         temp = temp->next;
     }
 
@@ -182,19 +182,8 @@ void free_table(HashTable* table) {
 
 void handle_collision(HashTable* table, unsigned long index, Ht_item* item) {
     LinkedList* head = table->overflow_buckets[index];
-    /*
-    if (head == NULL) {
-        // We need to create the list
-        head = allocate_list();
-        head->item = item;
-        table->overflow_buckets[index] = head;
-        return;
-    }
-    else {
-        */
-        // Insert to the list
-        table->overflow_buckets[index] = linkedlist_insert(head, item);
-        return;
+    table->overflow_buckets[index] = linkedlist_insert(head, item);
+    return;
     
 }
 
@@ -272,7 +261,7 @@ void LoadHostsFile( DNSHandle hDNS, const char* hostsFilePath )
     unsigned int dnCount = 0;
     unsigned int i = 0;
 
-    fInput = fopen("hosts", "r");
+    fInput = fopen("../hosts", "r");
     if (NULL == fInput)
         return;
 
@@ -284,11 +273,12 @@ void LoadHostsFile( DNSHandle hDNS, const char* hostsFilePath )
         return;
     }
 
-    //*size = dnCount;
     fseek(fInput, 0, SEEK_SET);
 
-    for (i = 0; i < dnCount && !feof(fInput); i++)
+
+    for (i = 0; i < dnCount && !feof(fInput); i++) 
     {
+        // Goes through hosts
         char buffer[201] = { 0 };
         char* pStringWalker = &buffer[0];
         unsigned int uHostNameLength = 0;
@@ -298,7 +288,7 @@ void LoadHostsFile( DNSHandle hDNS, const char* hostsFilePath )
 
         if (5 != fscanf_s(fInput, "%d.%d.%d.%d %s", &ip1, &ip2, &ip3, &ip4, buffer, 200))
             continue;
-
+        // Create int ip out of 4 sections
         IPADDRESS ip = (ip1 & 0xFF) << 24 |
             (ip2 & 0xFF) << 16 |
             (ip3 & 0xFF) << 8 |
@@ -310,11 +300,11 @@ void LoadHostsFile( DNSHandle hDNS, const char* hostsFilePath )
         {
             domainName = (char*)malloc(uHostNameLength + 1);
             strcpy(domainName, pStringWalker);
-            
+            // Insert into hash table
             ht_insert(DNSTables[hDNS], domainName, ip);
         }
     }
-
+    
     fclose(fInput);
 
 }
